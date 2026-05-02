@@ -183,6 +183,8 @@ For **each component below**:
 4. Search for the component name
 5. Click it, then click **Download**
 
+All components below are required.
+
 | Search For | Author/Note | What It Does |
 |------------|-------------|--------------|
 | `week-planner-card` | — | The main calendar grid |
@@ -192,9 +194,10 @@ For **each component below**:
 | `weather-card` | by bramkragten | Weather display in header |
 | `button-card` | by RomRider | Styled "Add Event" button |
 | `card-mod` | — | CSS customization throughout dashboard |
+| `browser_mod` | — | Powers the Add Event popup; hides HA sidebar/header for kiosk mode |
+| `layout-card` | — | Required for the Sections-view dashboard layout |
 
-Optional but recommended:
-| `browser_mod` | — | Hides HA sidebar/header for kiosk mode |
+> **Important:** After installing `browser_mod` via HACS, you also need to add it as an integration: **Settings → Devices & Services → Add Integration → Browser Mod**. HACS only downloads the files — until you add the integration, popups will not work.
 
 **After installing all components:**
 1. Go to **Settings → System → Restart** (restart Home Assistant)
@@ -342,22 +345,22 @@ Replace `YOUR_HA_SERVER_IP` with the actual IP address of your Home Assistant se
 
 ---
 
-## Phase 4: Configure Browser Mod for Kiosk Mode (Optional)
+## Phase 4: Configure Browser Mod for Kiosk Mode
 
 > **Where:** In the Home Assistant web interface (but targeting the Pi's browser)
 >
 > **What you're doing:** Telling HA to hide the sidebar and header when the Pi accesses it
 
-This makes the dashboard truly full-screen on the Pi display, removing HA's navigation elements.
+This makes the dashboard truly full-screen on the Pi display, removing HA's navigation elements. (The Add Event popup also depends on Browser Mod, so this phase is required.)
 
-1. Ensure `browser_mod` was installed via HACS (Step 2.5)
-2. Open the calendar dashboard **on the Raspberry Pi's browser** (it should already be showing it if you completed Phase 3)
-3. On your regular computer, go to **Settings → Devices & Services → Browser Mod**
-4. Register the Pi's browser as a device
-5. Configure its settings:
+1. Confirm `browser_mod` is installed via HACS **and** added as an integration (Step 2.5).
+2. On the **Raspberry Pi's browser**, open the calendar dashboard. It should already be showing it if you completed Phase 3.
+3. The Pi's browser will appear in **Settings → Devices & Services → Browser Mod** as a new device. From your regular computer, go there and click on it.
+4. Give the Pi a memorable name (e.g., `kitchen-kiosk`) and click **Register**.
+5. Once registered, open the device settings and toggle:
    - **Hide sidebar:** On
    - **Hide header:** On
-   - **Default dashboard:** `/family-calendar`
+   - **Default dashboard:** `family-calendar`
 
 ---
 
