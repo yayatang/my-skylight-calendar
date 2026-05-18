@@ -24,7 +24,7 @@
         | <a href="https://openaitx.github.io/view.html?user=mohesles&project=my-skylight-calendar&lang=tr">Türkçe</a>
         | <a href="https://openaitx.github.io/view.html?user=mohesles&project=my-skylight-calendar&lang=vi">Tiếng Việt</a>
         | <a href="https://openaitx.github.io/view.html?user=mohesles&project=my-skylight-calendar&lang=id">Bahasa Indonesia</a>
-        | <a href="https://openaitx.github.io/view.html?user=mohesles&project=my-skylight-calendar&lang=as">অসমীয়া</
+        | <a href="https://openaitx.github.io/view.html?user=mohesles&project=my-skylight-calendar&lang=as">অসমীয়া</a>
       </div>
     </div>
   </details>
@@ -62,7 +62,7 @@ Nevertheless, you case might be different and will need you to adjust it as need
 The hardware I originally used I chose based on what I mentioned above plus with the hope to be able to extend functionality using the webcam, speaker and microphone. Currently I would probably build it differently now in hindsight, since I havent had time to address these additional hardware ideas.
 
 * **Monitor:** [HP Engage 15-inch Touchscreen](https://computers.woot.com/offers/hp-engage-16t-fhd-monitor). I chose this over generic portable monitors because it includes a built-in **Speaker, Webcam, and Microphone**, allowing for future voice control or video calls.
-* **Computer:** An old Mini PC (NUC/Tiny PC) running Windows/Linux in Kiosk mode, or a Raspberry Pi 4.~~
+* **Computer:** An old Mini PC (NUC/Tiny PC) running Windows/Linux in Kiosk mode, or a Raspberry Pi 4.
 
 
 ## ✨ Features
@@ -75,100 +75,26 @@ The hardware I originally used I chose based on what I mentioned above plus with
 
 ---
 
-## ⚙️ Installation Guide
+## ⚙️ Setup
 
-*Note: This setup uses a **YAML Package** to automatically create all the necessary helpers, scripts, and variables for you. You do not need to create them manually.*
+This project has two parts: the **Home Assistant server** (where the calendar lives) and the **kiosk display** (the screen your family looks at). They run on different devices.
 
-### 1. Prerequisites (HACS)
+Pick the guide that matches what you need:
 
-You must have [HACS](https://hacs.xyz/) installed. Please install the following **Frontend** integrations:
+| Guide | What it covers |
+|-------|----------------|
+| **[Home Assistant Setup Guide](HOME_ASSISTANT_SETUP_GUIDE.md)** | Installing Home Assistant from scratch, HACS, calendars, weather, the dashboard, and the theme. Start here if you don't already have HA running. |
+| **[Raspberry Pi Setup Guide](RASPBERRY_PI_SETUP_GUIDE.md)** | Turning a Raspberry Pi into a full-screen kiosk pointed at your dashboard. Use after the dashboard is working. |
+| **[DIY Alternatives Comparison](DIY_ALTERNATIVES_COMPARISON.md)** | If you're not committed to Home Assistant, this compares MagicMirror, FullPageOS, and a custom web app. |
 
-* `week-planner-card`
-* `bubble-card`
-* `config-template-card`
-* `card-mod`
-* `better-moment-card`
-* `weather-card`
-* `browser_mod` (Required for the popups to work)
-* `layout-card` (Required for the Sections view)
-* `button-card` (Required for the popup to add event)
+### Files in this repo
 
-*Note: In Settings → Devices & Services, make sure Browser Mod appears as an Integration (tile) and not only under HACS. 
-If it isn’t there, click Add Integration → Browser Mod and finish the flow, then restart HA.
-Installing via HACS only downloads files; you must add the integration so HA registers its actions/entities.
-
-### 2. The Backend (The Brains)
-
-1. Open your `configuration.yaml` file in Home Assistant.
-2. Ensure you have this line added under `homeassistant:` to enable packages:
-
-   ```yaml
-   homeassistant:
-     packages: !include_dir_named packages
-   ```
-
-3. Create a folder named `packages` in your HA config directory (if you don't have one).
-4. Download [packages/family_calendar.yaml](packages/family_calendar.yaml) from this repo.
-5. Search for string [ #<--- UPDATE THIS ENTITY]  and update the calendar entity ID to match your environment. Check section 3 for more details.
-6. Place the file inside your `packages/` folder.
-7. **Restart Home Assistant**.
-
-### 3. The Calendars
-
-You can use **Google Calendars** or **Local Calendars**.
-
-#### Option A: Reuse Calendar Names (Easiest)
-
-
-1. Go to **Settings > Devices & Services**.
-2. Add the **Local Calendar** integration.
-3. Create calendars named exactly: `calendar1`, `calendar2`, `calendar3`, `calendar4`, `Family`.
-    * *If you use these names, the code works out of the box!*
-
-#### Option B: Custom Calendar
-
-1. Go to **Settings > Devices & Services**.
-2. Add the **Local Calendar** integration. or **Google Calendar**.
-3. Navigate to **Configuration > Integrations > Local Calendar** or **Google Calendar** and select "Add Entry"
-4. For each created entry, get the entity ID for updating the dashboard.yaml file.
-5. Open `dashboard.yaml`.
-6. Search for `# <--- UPDATE THIS ENTITY`.
-7. Update the entity ID matching your environment
-
-
-#### Setting up Holidays
-
-Since Home Assistant updates, Holidays are now added via UI:
-
-1. Go to **Settings > Devices & Services > Add Integration > Holiday**.
-2. Select your country.
-3. Check the entity ID (e.g., `calendar.holidays`). If it differs from the default, update it in the dashboard YAML.
-
-### 4. The Dashboard (The Look)
-
-1. Go to **Settings > Dashboard**
-2. Click on **Add Dashboard** (Select option "New Dashboard from Scratch" make sure to select "Add to sidebar").
-3. On the left menu, select the new created dashboard and click on the pencil icon to edit it.
-5. Select the 3 dots icon and select "Raw configurator editor".
-6. Copy and paste the code from [dashboard.yaml](dashboard.yaml).
-
-### Step 5: The Theme (Optional)
-
-To get the specific font look (Ovo):
-
-1. Ensure your `configuration.yaml` has this line under `frontend:`
-
-   ```yaml
-   frontend:
-     themes: !include_dir_merge_named themes
-   ```
-
-2. Create a folder named `themes` in your config directory.
-3. Download [themes/skylight.yaml](themes/skylight.yaml) and place it in that folder.
-4. Use File Editor and upload calbackgrd.png to /www/ folder, that translates internally to /local on the dashboard.
-5. Restart Home Assistant.
-6. Go to your Profile (User Icon bottom left) and change **Theme** to `Skylight`.
-NOTE: The theme is not comprehensive, so keep that in mind
+| File | Purpose |
+|------|---------|
+| [`packages/family_calendar.yaml`](packages/family_calendar.yaml) | All helpers, scripts, and automations — drop in `<config>/packages/` |
+| [`dashboard.yaml`](dashboard.yaml) | Dashboard layout — paste into the HA dashboard's raw YAML editor |
+| [`themes/skylight.yaml`](themes/skylight.yaml) | Optional Ovo-font theme — drop in `<config>/themes/` |
+| `calbackgrd.png` | Optional background image — upload to `<config>/www/` |
 
 ---
 

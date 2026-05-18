@@ -236,7 +236,7 @@ sudo nano /opt/kiosk/kiosk.sh
 
 Add this content (replace `YOUR_HOME_ASSISTANT_URL` with your Home Assistant server's IP or hostname, e.g., `192.168.1.100` or `homeassistant.local`):
 
-> **What URL to use:** The path after the port (`/family-calendar/family-calendar`) is your **dashboard path** + **view path** from the [Home Assistant Setup Guide](HOME_ASSISTANT_SETUP_GUIDE.md) (Step 8). If you chose different paths when creating your dashboard, substitute them here.
+> **What URL to use:** The path after the port (`/family-calendar/family-calendar`) is your **dashboard path** + **view path** from the [Home Assistant Setup Guide](HOME_ASSISTANT_SETUP_GUIDE.md) (Step 2.8). If you chose different paths when creating your dashboard, substitute them here.
 
 ```bash
 #!/bin/bash
@@ -262,7 +262,7 @@ Add this content (replace `YOUR_HOME_ASSISTANT_URL` with your Home Assistant ser
 **Chromium flags explained:**
 | Flag | Purpose |
 |------|---------|
-| `--app=URL` | Opens in "app mode" — no address bar, tabs, or browser UI; just the web page. The URL should point to your HA dashboard (see [Home Assistant Setup Guide](HOME_ASSISTANT_SETUP_GUIDE.md), Step 8) |
+| `--app=URL` | Opens in "app mode" — no address bar, tabs, or browser UI; just the web page. The URL should point to your HA dashboard (see [Home Assistant Setup Guide](HOME_ASSISTANT_SETUP_GUIDE.md), Step 2.8) |
 | `--kiosk` | Full-screen with no window decorations or exit controls |
 | `--noerrdialogs` | Suppresses crash/error pop-up dialogs |
 | `--disable-infobars` | Hides notification bars (e.g., "Chrome is not your default browser") |
